@@ -1,13 +1,13 @@
 # Exploration Charts catalogue
 
-This is the standalone `ThomasNikolaus/Cartography` site. Its files are served
-initially at `https://thomasnikolaus.github.io/Cartography/`.
+This is the standalone `ThomasNikolaus/Cartography` site. Its files are configured to be served
+at `https://thomasnikolaus.de/Cartography/` through the personal user site's custom-domain inheritance.
 
 `site.json` at the repository root controls generated URLs:
 
 ```json
 {
-  "origin": "https://thomasnikolaus.github.io",
+  "origin": "https://thomasnikolaus.de",
   "base_path": "/Cartography",
   "homepage_url": "https://thomasnikolaus.de"
 }

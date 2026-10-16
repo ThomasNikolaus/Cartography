@@ -9,7 +9,11 @@ In this repository, choose **Settings → Pages → Build and deployment → Sou
 The included `pages.yml` workflow builds and checks the website on every push to `main`, then publishes it.
 Pull requests run the build checks without publishing.
 
-The initial project address is `https://thomasnikolaus.github.io/Cartography/`.
+The configured project address is `https://thomasnikolaus.de/Cartography/`.
+For this address, publish the personal homepage as the user site
+in `ThomasNikolaus/thomasnikolaus.github.io`, with `thomasnikolaus.de` configured
+as its custom domain. This enables GitHub Pages domain inheritance. This `Cartography` repository is published independently
+as a project site; leave its own Custom domain setting empty.
 The capital **C** in `/Cartography` matters. Do not copy the personal homepage's `CNAME` file here.
 
 ## Edit the site
@@ -42,8 +46,18 @@ The staging step checks links and copies only the public website files. Tooling,
 Invite contributors through **Settings → Collaborators → Add people** in this repository.
 They can maintain this project without receiving access to the separate `homepage` repository.
 
-## A future project domain
+## Personal homepage and project site
 
-For a later address such as `cartography.thomasnikolaus.de`, update `site.json` to use that origin and an empty `base_path`, and configure the domain in GitHub Pages and DNS.
+The personal homepage repository must be named `thomasnikolaus.github.io` for
+GitHub Pages to serve independent project sites under its custom domain.
+The local `homepage` folder can keep its name. After renaming that repository,
+update its Git remote to `https://github.com/ThomasNikolaus/thomasnikolaus.github.io.git`.
+Keep `thomasnikolaus.de` configured on the personal homepage's Pages settings.
+
+Do not set `thomasnikolaus.de` as a separate Custom domain on this project repository.
+The `site.json` origin controls canonical and citation URLs; `/Cartography` is
+the deployment prefix. Explicit links back to the personal homepage are treated
+as external project dependencies by the link checker.
+
 Keep old Chart, version, and PDF addresses reachable when moving a published collection.
 The existing homepage should only redirect to this project after the new website is live and checked.

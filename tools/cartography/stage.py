@@ -109,7 +109,7 @@ class PageReferences(HTMLParser):
         canonical = tag == "link" and "canonical" in (attrs.get("rel") or "").lower().split()
         for attribute in ("href", "src"):
             if attrs.get(attribute) is not None:
-                self.references.append((attribute, attrs[attribute], canonical))
+                self.references.append((tag, attribute, attrs[attribute], canonical))
 
 
 def origin(parts):
@@ -123,10 +123,12 @@ def validate_references(sources, config):
              if Path(name).suffix.lower() in {".html", ".htm"}}
     expected_origin = origin(urlsplit(config["origin"]))
     prefix = config["base_path"]
+    homepage_origin = origin(urlsplit(config["homepage_url"]))
     for name, page in pages.items():
         page_url = build.absolute_url(config, name)
-        for attribute, reference, canonical in page.references:
+        for tag, attribute, reference, canonical in page.references:
             try:
+                original = urlsplit(reference.strip())
                 target = urlsplit(urljoin(page_url, reference.strip()))
                 if canonical and (target.scheme != "https" or origin(target) != expected_origin):
                     raise ValueError("Canonical URL must use the configured HTTPS origin")
@@ -142,6 +144,12 @@ def validate_references(sources, config):
                 elif path.startswith(prefix + "/"):
                     relative = path[len(prefix) + 1:]
                 else:
+                    # Explicit links back to the personal homepage are outside
+                    # this project's published files, even on the same domain.
+                    if (tag == "a" and attribute == "href" and not canonical
+                            and original.scheme == "https"
+                            and origin(original) == homepage_origin):
+                        continue
                     raise ValueError(f"Local URL escapes the configured base path {prefix or '/'}")
                 if relative in sources:
                     destination = relative
@@ -166,9 +174,12 @@ def stage(site_root, output="_site"):
     sources = public_sources(site_root)
     # Broken links leave any previous output untouched.
     validate_references(sources, config)
-    if destination.exists():
-        shutil.rmtree(destination)
-    destination.mkdir(parents=True)
+    destination.mkdir(parents=True, exist_ok=True)
+    for child in destination.iterdir():
+        if child.is_dir() and not child.is_symlink():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
     for name, source in sorted(sources.items()):
         target = destination / name
         target.parent.mkdir(parents=True, exist_ok=True)
