@@ -200,7 +200,7 @@ def catalogue(charts, config):
     if not charts:
         placeholders = (
             ("Group completion commutes with infinite products", "group-completion-commutes-with-infinite-products.pdf"),
-            ("There is no infinite Künneth", "there-is-no-infinite-kunneth.pdf"),
+            ("There is no infinite Künneth (yet)", "there-is-no-infinite-kunneth.pdf"),
         )
         entries = []
         for title, filename in placeholders:
