@@ -221,19 +221,19 @@ a:focus-visible, summary:focus-visible {
   width: min(46%, 400px);
   max-width: 400px;
   margin: 0;
-  /* Reserve the full circle plus breathing room around the visible 48% crop. */
-  shape-outside: circle(50% at 50% 50%) border-box;
+  /* Follow the assembled paper edge, with room for the surrounding text. */
+  shape-outside: polygon(1.325% 41.406%, 7.152% 25.651%, 18.278% 12.63%, 33.51% 4.167%, 49.272% 1.432%, 50.728% 1.432%, 63.576% 3.646%, 66.49% 4.167%, 67.682% 4.688%, 81.589% 12.63%, 92.715% 25.521%, 98.675% 41.536%, 98.675% 58.464%, 92.848% 74.219%, 81.987% 86.979%, 81.06% 87.63%, 66.755% 95.703%, 63.046% 96.354%, 49.801% 98.568%, 33.907% 95.833%, 32.45% 95.312%, 18.278% 87.24%, 7.152% 74.219%, 1.325% 58.594%) border-box;
   shape-margin: 30px;
 }
 .atlas-artwork-window {
-  aspect-ratio: 1;
+  aspect-ratio: 755 / 768;
   overflow: hidden;
 }
 .cartography .atlas-artwork-window img {
   width: 100%;
   max-height: none;
-  /* Keep the full world map and its pale rim, excluding the corner decorations. */
-  clip-path: circle(48% at 50% 50%);
+  /* Preserve the polygonal paper outline; hide only the gray scan background. */
+  clip-path: polygon(1.325% 41.406%, 7.152% 25.651%, 18.278% 12.63%, 33.51% 4.167%, 49.272% 1.432%, 50.728% 1.432%, 63.576% 3.646%, 66.49% 4.167%, 67.682% 4.688%, 81.589% 12.63%, 92.715% 25.521%, 98.675% 41.536%, 98.675% 58.464%, 92.848% 74.219%, 81.987% 86.979%, 81.06% 87.63%, 66.755% 95.703%, 63.046% 96.354%, 49.801% 98.568%, 33.907% 95.833%, 32.45% 95.312%, 18.278% 87.24%, 7.152% 74.219%, 1.325% 58.594%);
 }
 .cartography .atlas-figure figcaption {
   position: absolute;

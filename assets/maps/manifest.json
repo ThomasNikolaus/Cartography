@@ -12,7 +12,8 @@
       "source_width": 1534,
       "source_height": 1536,
       "format": "WebP",
-      "quality": 84
+      "quality": 84,
+      "usage": "Previous circular-crop version; retained at its existing URL."
     },
     {
       "file": "urbano-monte-tavola-xi-400.webp",
@@ -61,9 +62,122 @@
       "source_height": 1156,
       "format": "WebP",
       "quality": 84
+    },
+    {
+      "file": "urbano-monte-world-polygon-768.webp",
+      "width": 755,
+      "height": 768,
+      "bytes": 117660,
+      "source": "https://www.davidrumsey.com/rumsey/Size3/RUMSEY~8~1/179/10130085.jpg",
+      "source_page": "https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~303644~90074313:Composite--Tavola-1-60---Map-of-the",
+      "catalogue_number": "10130.085",
+      "source_bytes": 496299,
+      "source_width": 755,
+      "source_height": 768,
+      "format": "WebP",
+      "quality": 84,
+      "usage": "Homepage world map. Original polygonal paper edge retained; gray scan background hidden by CSS.",
+      "outline_percent": [
+        [
+          1.325,
+          41.406
+        ],
+        [
+          7.152,
+          25.651
+        ],
+        [
+          18.278,
+          12.63
+        ],
+        [
+          33.51,
+          4.167
+        ],
+        [
+          49.272,
+          1.432
+        ],
+        [
+          50.728,
+          1.432
+        ],
+        [
+          63.576,
+          3.646
+        ],
+        [
+          66.49,
+          4.167
+        ],
+        [
+          67.682,
+          4.688
+        ],
+        [
+          81.589,
+          12.63
+        ],
+        [
+          92.715,
+          25.521
+        ],
+        [
+          98.675,
+          41.536
+        ],
+        [
+          98.675,
+          58.464
+        ],
+        [
+          92.848,
+          74.219
+        ],
+        [
+          81.987,
+          86.979
+        ],
+        [
+          81.06,
+          87.63
+        ],
+        [
+          66.755,
+          95.703
+        ],
+        [
+          63.046,
+          96.354
+        ],
+        [
+          49.801,
+          98.568
+        ],
+        [
+          33.907,
+          95.833
+        ],
+        [
+          32.45,
+          95.312
+        ],
+        [
+          18.278,
+          87.24
+        ],
+        [
+          7.152,
+          74.219
+        ],
+        [
+          1.325,
+          58.594
+        ]
+      ]
     }
   ],
-  "original_total_bytes": 4266088,
-  "optimized_total_bytes": 249448,
-  "reduction_percent": 94.2
+  "original_total_bytes": 4762387,
+  "optimized_total_bytes": 367108,
+  "reduction_percent": 92.3
 }
