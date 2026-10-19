@@ -16,7 +16,7 @@ import build
 PUBLIC_FILES = ("index.html", "Style.css", "Cartography.css", "favicon-mm.png")
 PUBLIC_DIRECTORIES = ("assets", "placeholders", "charts")
 PUBLIC_SUFFIXES = frozenset({
-    ".html", ".htm", ".pdf", ".css", ".js", ".mjs", ".wasm",
+    ".html", ".htm", ".pdf", ".zip", ".css", ".js", ".mjs", ".wasm",
     ".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".svg", ".ico",
     ".woff", ".woff2", ".ttf", ".otf", ".mp3", ".wav", ".ogg", ".mp4", ".webm",
 })

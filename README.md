@@ -23,9 +23,14 @@ The capital **C** in `/Cartography` matters. Do not copy the personal homepage's
 - `charts/`: PDFs and generated landing pages for real Charts.
 - `placeholders/`: the four clearly marked dummy PDFs shown while the catalogue is empty.
 - `assets/maps/`: optimized historic map illustrations and their source/licence manifest.
+- `assets/maps/monte/`: all 60 numbered Monte sheets, a visual index, and a ZIP download.
 - `assets/homotopical-cartography/`: the earlier illustrations, retained at their existing URLs.
 - `Style.css`, `Cartography.css`, and `favicon-mm.png`: the shared academic visual style and MM symbol.
 - `site.json`: the public origin, deployment path, and link to the personal homepage.
+
+Browse [the numbered map sheets](assets/maps/monte/index.html) to choose an illustration.
+A real Chart can set `"map_sheet": 18` in its `charts.json` record; otherwise the
+build chooses a sheet automatically from its stable ID. Existing assignments remain unchanged.
 
 See [the catalogue guide](tools/cartography/README.md) for adding a real Chart, versioning, and persistent identifiers.
 Run `python3 tools/cartography/build.py` before committing catalogue changes; include the generated Chart/version pages with their PDFs and metadata.

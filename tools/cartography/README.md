@@ -53,6 +53,7 @@ actual PDF before building):
   "charts": [
     {
       "id": "HC-0001",
+      "map_sheet": 11,
       "versions": [
         {
           "version": "v1",
@@ -70,8 +71,9 @@ actual PDF before building):
 }
 ```
 
-Optional fields: `concept_doi` on the Chart, and `doi` and `arxiv` on each version.
-Use raw registered identifiers, not URLs; omit fields until they exist. No
+Optional fields: `map_sheet` (integer 1–60) and `concept_doi` on the Chart,
+and `doi` and `arxiv` on each version. For DOI and arXiv fields, use raw registered
+identifiers rather than URLs; omit those fields until the identifiers exist. No
 identifiers are registered by this script. The highest `vN` is the current
 version. Each version carries its own title, authors, date and abstract, so
 later authorship changes do not rewrite earlier citations.
@@ -124,11 +126,26 @@ The build intentionally retains old files and does not delete released versions.
 The landing-page styles and favicon are served from the configured site root.
 Keep `Style.css`, `Cartography.css`, `favicon-mm.png`, all four placeholder PDFs, and
 the images under `assets/` in the deployed output. Each catalogue entry has an
-illustration linked to its PDF. Real Charts select a map sheet by their stable
-numeric ID, so adding another Chart does not change the existing illustrations.
-The WebP images under `assets/maps/` total about 250 KB; their source URLs,
-dimensions, credits and licence are recorded in `assets/maps/manifest.json`.
-The main image loads immediately and the catalogue thumbnails load lazily.
+illustration linked to its PDF. The 60 numbered sheets are available under
+`assets/maps/monte/karte-01.webp` through `karte-60.webp`; the file numbers match
+Monte's historical sheet numbers. Open `assets/maps/monte/index.html` for the
+visual index, or download `assets/maps/monte/monte-karten.zip` for all images,
+source details and credits. The library totals about 1.1 MB. It is not loaded by
+the main page: each Chart requests only its assigned image, lazily.
+
+Set `"map_sheet": 18` on a Chart (next to its `id` and `versions`) to select sheet
+18. This is an illustration choice, not a mathematical version change. If
+omitted, the stable numeric Chart ID determines the sheet: IDs 1–4 keep sheets
+11, 1, 40 and 55; subsequent IDs use the remaining sheets in numerical order.
+The selection repeats after 60 IDs. Adding another Chart never changes existing
+assignments. The existing four illustrations retain their paper-edge clipping;
+other library images preserve their complete scan, including the paper edges.
+
+Source URLs, catalogue numbers, dimensions, credits and licence are recorded in
+`assets/maps/monte/manifest.json`. The two covers, diagrams and duplicate scan
+of sheet XLII are excluded. The main world-map image continues to load immediately.
+The public output includes the visual index, WebP files and ZIP, but raw JSON
+and README files remain available only in the repository and ZIP.
 Do not copy the personal homepage's `CNAME` into this repository.
 
 Pages remain `noindex, nofollow` while this section is unlisted; remove that

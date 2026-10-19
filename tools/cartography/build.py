@@ -136,6 +136,10 @@ def load_charts(site_root, config):
             raise ValueError(f"Duplicate chart ID: {chart_id}")
         seen_ids.add(chart_id)
         chart = {"id": chart_id, "slug": chart_id.lower(), "versions": []}
+        map_sheet = raw.get("map_sheet")
+        if map_sheet is not None and (type(map_sheet) is not int or not 1 <= map_sheet <= 60):
+            raise ValueError(f"{chart_id}: map_sheet must be an integer from 1 to 60")
+        chart["map_sheet"] = map_sheet
         chart["concept_doi"] = optional_identifier(raw, "concept_doi", DOI_RE, chart_id)
         versions = raw.get("versions")
         if not isinstance(versions, list) or not versions:
@@ -217,7 +221,36 @@ def illustrated_record(contents, title, pdf_url, illustration, config, placehold
             '</a>\n</article>')
 
 
-def catalogue(charts, config):
+# Preserve the existing four assignments, then use the remaining sheets in order.
+DEFAULT_MAP_SHEETS = (11, 1, 40, 55) + tuple(number for number in range(1, 61)
+                                         if number not in {11, 1, 40, 55})
+LEGACY_MAP_CLASSES = {11: "xi", 1: "i", 40: "xl", 55: "lv"}
+
+
+def load_map_illustrations(site_root):
+    data = json.loads((site_root / "assets/maps/monte/manifest.json").read_text(encoding="utf-8"))
+    images = data.get("images") if isinstance(data, dict) else None
+    if not isinstance(images, list) or len(images) != 60:
+        raise ValueError("Monte image manifest must contain all 60 sheets")
+    sheets = {}
+    for image in images:
+        if not isinstance(image, dict):
+            raise ValueError("Monte image records must be objects")
+        number = image.get("sheet")
+        if type(number) is not int or not 1 <= number <= 60 or number in sheets:
+            raise ValueError("Monte sheet numbers must be unique integers from 1 to 60")
+        filename = f"karte-{number:02}.webp"
+        if (image.get("file") != filename or image.get("width") != 400
+                or type(image.get("height")) is not int or not 1 <= image["height"] <= 400):
+            raise ValueError(f"Invalid Monte image record for sheet {number}")
+        if not (site_root / "assets/maps/monte" / filename).is_file():
+            raise ValueError(f"Missing Monte image for sheet {number}")
+        css_class = LEGACY_MAP_CLASSES.get(number, f"sheet-{number:02}")
+        sheets[number] = (css_class, "monte/" + filename, image["height"])
+    return sheets
+
+
+def catalogue(charts, config, map_illustrations):
     if not charts:
         placeholders = (
             ("Group completion commutes with infinite products", "group-completion-commutes-with-infinite-products.pdf"),
@@ -239,7 +272,8 @@ def catalogue(charts, config):
                     + metadata(chart, record) + '\n'
                     + f'<p class="chart-abstract">{escape(record["abstract"])}</p>\n'
                     + links(record))
-        illustration = CHART_ILLUSTRATIONS[(int(chart["id"][3:]) - 1) % len(CHART_ILLUSTRATIONS)]
+        sheet = chart["map_sheet"] or DEFAULT_MAP_SHEETS[(int(chart["id"][3:]) - 1) % len(DEFAULT_MAP_SHEETS)]
+        illustration = map_illustrations[sheet]
         entries.append(illustrated_record(contents, record["title"], record["pdf_url"], illustration, config))
     return "\n".join(entries)
 
@@ -301,6 +335,7 @@ def build(site_root):
     site_root = site_root.resolve()
     config = load_config(site_root)
     charts = load_charts(site_root, config)
+    map_illustrations = load_map_illustrations(site_root)
     main_path = site_root / "index.html"
     if not main_path.resolve().is_relative_to(site_root):
         raise ValueError("Main HTML path escapes the site root")
@@ -309,7 +344,7 @@ def build(site_root):
         raise ValueError("Main HTML must contain exactly one correctly ordered catalogue marker pair")
     before, rest = main_html.split(START, 1)
     _, after = rest.split(END, 1)
-    pending = [(main_path, before + START + "\n" + catalogue(charts, config) + "\n" + END + after)]
+    pending = [(main_path, before + START + "\n" + catalogue(charts, config, map_illustrations) + "\n" + END + after)]
     for chart in charts:
         base = site_root / "charts" / chart["slug"]
         if not base.resolve().is_relative_to(site_root):
