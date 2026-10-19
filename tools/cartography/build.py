@@ -200,14 +200,6 @@ def metadata(chart, record):
             f'<strong>Status:</strong> {escape(record["status"])}</p>')
 
 
-CHART_ILLUSTRATIONS = (
-    ("xi", "urbano-monte-tavola-xi-400.webp", 296),
-    ("i", "urbano-monte-tavola-i-400.webp", 299),
-    ("xl", "urbano-monte-tavola-xl-400.webp", 289),
-    ("lv", "urbano-monte-tavola-lv-400.webp", 286),
-)
-
-
 def illustrated_record(contents, title, pdf_url, illustration, config, placeholder=False):
     sheet, filename, height = illustration
     classes = "chart-record " + ("chart-placeholder-record " if placeholder else "") + "illustrated-chart-record"
@@ -224,7 +216,6 @@ def illustrated_record(contents, title, pdf_url, illustration, config, placehold
 # Preserve the existing four assignments, then use the remaining sheets in order.
 DEFAULT_MAP_SHEETS = (11, 1, 40, 55) + tuple(number for number in range(1, 61)
                                          if number not in {11, 1, 40, 55})
-LEGACY_MAP_CLASSES = {11: "xi", 1: "i", 40: "xl", 55: "lv"}
 
 
 def load_map_illustrations(site_root):
@@ -245,7 +236,7 @@ def load_map_illustrations(site_root):
             raise ValueError(f"Invalid Monte image record for sheet {number}")
         if not (site_root / "assets/maps/monte" / filename).is_file():
             raise ValueError(f"Missing Monte image for sheet {number}")
-        css_class = LEGACY_MAP_CLASSES.get(number, f"sheet-{number:02}")
+        css_class = f"sheet-{number:02}"
         sheets[number] = (css_class, "monte/" + filename, image["height"])
     return sheets
 
@@ -253,13 +244,14 @@ def load_map_illustrations(site_root):
 def catalogue(charts, config, map_illustrations):
     if not charts:
         placeholders = (
-            ("Group completion commutes with infinite products", "group-completion-commutes-with-infinite-products.pdf"),
-            ("There is no infinite Künneth (yet)", "there-is-no-infinite-kunneth.pdf"),
-            ("The immersion conjecture", "the-immersion-conjecture.pdf"),
-            ("The Segal Conjecture", "the-segal-conjecture.pdf"),
+            ("Group completion commutes with infinite products", "group-completion-commutes-with-infinite-products.pdf", 11),
+            ("There is no infinite Künneth (yet)", "there-is-no-infinite-kunneth.pdf", 1),
+            ("The immersion conjecture", "the-immersion-conjecture.pdf", 40),
+            ("The Segal Conjecture", "the-segal-conjecture.pdf", 55),
         )
         entries = []
-        for (title, filename), illustration in zip(placeholders, CHART_ILLUSTRATIONS):
+        for title, filename, sheet in placeholders:
+            illustration = map_illustrations[sheet]
             href = site_url(config, "placeholders/" + filename)
             contents = (f'<h3><a href="{escape(href)}">{escape(title)}</a></h3>\n'
                         f'<p class="chart-links"><a href="{escape(href)}">PDF</a> · Placeholder</p>')

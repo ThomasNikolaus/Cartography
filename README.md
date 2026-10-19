@@ -35,6 +35,28 @@ build chooses a sheet automatically from its stable ID. Existing assignments rem
 See [the catalogue guide](tools/cartography/README.md) for adding a real Chart, versioning, and persistent identifiers.
 Run `python3 tools/cartography/build.py` before committing catalogue changes; include the generated Chart/version pages with their PDFs and metadata.
 
+## Add a Chart
+
+1. Assign the next unused Chart ID, starting with `HC-0001`. Its ID is independent
+   of the illustration number.
+2. Add the first PDF as `charts/hc-0001/v1/chart.pdf` (substitute the actual ID).
+3. Add one record in `charts.json` using [the catalogue example](tools/cartography/README.md).
+   Supply the title, authors, date, short abstract, publication status and a
+   precise note on what the authors have checked and understood. Set e.g.
+   `"map_sheet": 18` to choose [sheet 18](assets/maps/monte/index.html#karte-18).
+   If omitted, the illustration is assigned automatically.
+4. Build and check with `python3 tools/cartography/stage.py --output _preview/Cartography`,
+   then inspect the local preview as described below. The build creates the
+   catalogue entry and its current/version landing pages.
+5. Commit `charts.json`, the PDF, updated `index.html`, and generated files under
+   `charts/` together. Push to `main` to publish; contributors can instead open a
+   pull request for review before merging. The first real Chart replaces the
+   four example entries.
+
+For a revised manuscript, add `v2` with its own PDF and metadata to the same
+Chart's `versions` list. Keep the earlier version files and records. Changing
+only `map_sheet` does not require a new manuscript version.
+
 ## Preview locally
 
 Python 3.10 or newer is sufficient; no additional packages are required.

@@ -44,6 +44,9 @@ conjecture”, and “The Segal Conjecture”. Their files live under `placehold
 not actual Chart records, and have no assigned identifiers, authors or review
 claims. The first actual Chart automatically replaces all four placeholder entries
 in the catalogue; the build does not delete the placeholder PDF files.
+Their illustrations use the same numbered library and rendering path as real
+Charts: sheets 11, 01, 40 and 55 respectively. Do not edit the generated image
+paths in `index.html`; for real Charts, select the number through `map_sheet`.
 
 To add an actual Chart, use this shape (replace all example content and add the
 actual PDF before building):
@@ -138,8 +141,10 @@ Set `"map_sheet": 18` on a Chart (next to its `id` and `versions`) to select she
 omitted, the stable numeric Chart ID determines the sheet: IDs 1–4 keep sheets
 11, 1, 40 and 55; subsequent IDs use the remaining sheets in numerical order.
 The selection repeats after 60 IDs. Adding another Chart never changes existing
-assignments. The existing four illustrations retain their paper-edge clipping;
-other library images preserve their complete scan, including the paper edges.
+assignments. Sheets 01, 11, 40 and 55 retain their existing paper-edge clipping, keyed by
+their numeric sheet classes. Other library images preserve their complete scan,
+including the paper edges. Earlier standalone image URLs remain available for
+compatibility; all catalogue entries now load images from the numbered library.
 
 Source URLs, catalogue numbers, dimensions, credits and licence are recorded in
 `assets/maps/monte/manifest.json`. The two covers, diagrams and duplicate scan
