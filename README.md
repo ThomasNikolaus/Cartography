@@ -21,8 +21,9 @@ The capital **C** in `/Cartography` matters. Do not copy the personal homepage's
 - `index.html`: project introduction, Atlas explanation, and page layout.
 - `charts.json`: real Chart records, authors, versions, status, and human review notes.
 - `charts/`: PDFs and generated landing pages for real Charts.
-- `placeholders/`: the two clearly marked dummy PDFs shown while the catalogue is empty.
-- `assets/homotopical-cartography/`: the two map illustrations.
+- `placeholders/`: the four clearly marked dummy PDFs shown while the catalogue is empty.
+- `assets/maps/`: optimized historic map illustrations and their source/licence manifest.
+- `assets/homotopical-cartography/`: the earlier illustrations, retained at their existing URLs.
 - `Style.css`, `Cartography.css`, and `favicon-mm.png`: the shared academic visual style and MM symbol.
 - `site.json`: the public origin, deployment path, and link to the personal homepage.
 

@@ -38,11 +38,11 @@ updates its single canonical link, and creates individual Chart landing pages.
 It does not alter other main-page links or add global navigation links.
 
 `charts.json` stays empty until an actual Chart is ready. While it is empty,
-the generator displays two clearly labelled dummy PDF entries: “Group completion
-commutes with infinite products” and “There is no infinite Künneth”. Their files
-live under `placeholders/`. These are layout placeholders,
+the generator displays four clearly labelled dummy PDF entries: “Group completion
+commutes with infinite products”, “There is no infinite Künneth (yet)”, “The immersion
+conjecture”, and “The Segal Conjecture”. Their files live under `placeholders/`. These are layout placeholders,
 not actual Chart records, and have no assigned identifiers, authors or review
-claims. The first actual Chart automatically replaces both placeholder entries
+claims. The first actual Chart automatically replaces all four placeholder entries
 in the catalogue; the build does not delete the placeholder PDF files.
 
 To add an actual Chart, use this shape (replace all example content and add the
@@ -122,8 +122,13 @@ The build intentionally retains old files and does not delete released versions.
 `CHART-CATALOGUE:START` / `CHART-CATALOGUE:END` marker pair.
 
 The landing-page styles and favicon are served from the configured site root.
-Keep `Style.css`, `Cartography.css`, `favicon-mm.png`, both placeholder PDFs, and
-the images under `assets/homotopical-cartography/` in the deployed output.
+Keep `Style.css`, `Cartography.css`, `favicon-mm.png`, all four placeholder PDFs, and
+the images under `assets/` in the deployed output. Each catalogue entry has an
+illustration linked to its PDF. Real Charts select a map sheet by their stable
+numeric ID, so adding another Chart does not change the existing illustrations.
+The WebP images under `assets/maps/` total about 250 KB; their source URLs,
+dimensions, credits and licence are recorded in `assets/maps/manifest.json`.
+The main image loads immediately and the catalogue thumbnails load lazily.
 Do not copy the personal homepage's `CNAME` into this repository.
 
 Pages remain `noindex, nofollow` while this section is unlisted; remove that

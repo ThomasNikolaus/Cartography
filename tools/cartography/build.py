@@ -196,28 +196,51 @@ def metadata(chart, record):
             f'<strong>Status:</strong> {escape(record["status"])}</p>')
 
 
+CHART_ILLUSTRATIONS = (
+    ("xi", "urbano-monte-tavola-xi-400.webp", 296),
+    ("i", "urbano-monte-tavola-i-400.webp", 299),
+    ("xl", "urbano-monte-tavola-xl-400.webp", 289),
+    ("lv", "urbano-monte-tavola-lv-400.webp", 286),
+)
+
+
+def illustrated_record(contents, title, pdf_url, illustration, config, placeholder=False):
+    sheet, filename, height = illustration
+    classes = "chart-record " + ("chart-placeholder-record " if placeholder else "") + "illustrated-chart-record"
+    image_url = site_url(config, "assets/maps/" + filename)
+    return (f'<article class="{classes}">\n'
+            '<div class="chart-record-text">\n' + contents + '\n</div>\n'
+            f'<a class="chart-thumbnail chart-thumbnail--{sheet}" href="{escape(pdf_url)}" '
+            f'aria-label="Open PDF: {escape(title)}">\n'
+            f'<img src="{escape(image_url)}" alt="" width="400" height="{height}" '
+            'loading="lazy" decoding="async">\n'
+            '</a>\n</article>')
+
+
 def catalogue(charts, config):
     if not charts:
         placeholders = (
             ("Group completion commutes with infinite products", "group-completion-commutes-with-infinite-products.pdf"),
             ("There is no infinite Künneth (yet)", "there-is-no-infinite-kunneth.pdf"),
+            ("The immersion conjecture", "the-immersion-conjecture.pdf"),
+            ("The Segal Conjecture", "the-segal-conjecture.pdf"),
         )
         entries = []
-        for title, filename in placeholders:
+        for (title, filename), illustration in zip(placeholders, CHART_ILLUSTRATIONS):
             href = site_url(config, "placeholders/" + filename)
-            entries.append('<article class="chart-record chart-placeholder-record">\n'
-                           f'<h3><a href="{escape(href)}">{escape(title)}</a></h3>\n'
-                           f'<p class="chart-links"><a href="{escape(href)}">PDF</a> · Placeholder</p>\n'
-                           '</article>')
+            contents = (f'<h3><a href="{escape(href)}">{escape(title)}</a></h3>\n'
+                        f'<p class="chart-links"><a href="{escape(href)}">PDF</a> · Placeholder</p>')
+            entries.append(illustrated_record(contents, title, href, illustration, config, placeholder=True))
         return "\n".join(entries)
     entries = []
     for chart in charts:
         record = chart["versions"][0]
-        entries.append(f'<article class="chart-record">\n'
-                       f'<h3><a href="{escape(chart_url(config, chart))}">{escape(record["title"])}</a></h3>\n'
-                       + metadata(chart, record) + '\n'
-                       + f'<p class="chart-abstract">{escape(record["abstract"])}</p>\n'
-                       + links(record) + '\n</article>')
+        contents = (f'<h3><a href="{escape(chart_url(config, chart))}">{escape(record["title"])}</a></h3>\n'
+                    + metadata(chart, record) + '\n'
+                    + f'<p class="chart-abstract">{escape(record["abstract"])}</p>\n'
+                    + links(record))
+        illustration = CHART_ILLUSTRATIONS[(int(chart["id"][3:]) - 1) % len(CHART_ILLUSTRATIONS)]
+        entries.append(illustrated_record(contents, record["title"], record["pdf_url"], illustration, config))
     return "\n".join(entries)
 
 
