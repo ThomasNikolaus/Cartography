@@ -1,3 +1,24 @@
 {
-  "charts": []
+  "charts": [
+    {
+      "id": "HC-0001",
+      "map_sheet": 11,
+      "versions": [
+        {
+          "version": "v1",
+          "title": "Group completion commutes with infinite products",
+          "authors": [
+            "Georg Lehner",
+            "Thomas Nikolaus",
+            "Phil Pützstück"
+          ],
+          "date": "2026-11-02",
+          "abstract": "We show that group completion of 𝔼ₙ-monoids commutes with infinite products for n ≥ 2, by reducing the question to a more general theorem about the infinite-product-preservation of the realization functor on a suitable class of simplicial 𝔼₁-monoids. We also provide an alternative shorter argument specifically for the case of 𝔼∞-monoids, which uses the known fact that K-theory of additive ∞-categories commutes with infinite products.",
+          "status": "Exploration Chart (not peer-reviewed)",
+          "human_review": "The main arguments have originally been generated through the use of generative AI, and then checked and simplified by the three authors.",
+          "pdf": "charts/hc-0001/v1/group-completion-commutes-with-infinite-products.pdf"
+        }
+      ]
+    }
+  ]
 }
