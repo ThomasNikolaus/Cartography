@@ -20,8 +20,11 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - name: Build catalogue and check public files
-        run: python3 tools/cartography/stage.py --output _site
+      - name: Copy website files
+        run: |
+          mkdir -p _site
+          cp index.html Style.css Cartography.css favicon-mm.png .nojekyll _site/
+          cp -R assets charts placeholders _site/
       - name: Upload website
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
