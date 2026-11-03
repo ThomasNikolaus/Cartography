@@ -271,6 +271,7 @@ a:focus-visible, summary:focus-visible {
   grid-column: 1;
   grid-row: 1;
   justify-self: start;
+  align-self: start;
   width: 190px;
   line-height: 0;
 }
