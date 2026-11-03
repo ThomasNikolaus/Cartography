@@ -8,8 +8,8 @@ The site uses plain HTML and CSS and needs no local build.
 1. Put the PDF directly in `charts/`, using a descriptive filename such as
    `group-completion-commutes-with-infinite-products.pdf`.
 2. In `index.html`, under **The Atlas**, copy an existing `<article>` and
-   replace the title, author names, and PDF links (title, PDF link, and
-   thumbnail). Update the thumbnail's `aria-label` to match the title.
+   replace the title, author names, and PDF links (title and thumbnail).
+   Update the thumbnail's `aria-label` to match the title.
    The optional **About this chart** section can contain a brief description,
    publication status, and a note on what the authors have checked.
 3. To change the illustration, choose a sheet from the
