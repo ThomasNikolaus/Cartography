@@ -303,7 +303,7 @@ a:focus-visible, summary:focus-visible {
   letter-spacing: 0;
 }
 .cartography .map-note > p:not(.artwork-credit) {
-  margin: 0;
+  margin: 0 0 12px;
   color: var(--muted);
   font-size: .88rem;
   line-height: 1.6;
